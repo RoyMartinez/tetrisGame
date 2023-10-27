@@ -55,8 +55,25 @@ const piece ={
   ]
 }
 
+
+let lastTime = 0
+let dropCounter = 0
 // el refrescamiento del juego
-function update(){
+function update(time = 0){
+  const deltaTime = time-lastTime
+  lastTime = time
+  dropCounter += deltaTime
+
+  if(dropCounter>1000){
+    piece.position.y++
+    if(checkCollision()){
+      piece.position.y--
+      solidifyPiece()
+      removeRows()
+    }
+    dropCounter =0
+  }
+
   draw()
   requestAnimationFrame(update)
 }
@@ -122,8 +139,6 @@ function removeRows(){
     board.unshift(newRow)
   })
 }
-
-
 
 document.addEventListener('keydown',event=>{
   if(event.key==='ArrowLeft'){
