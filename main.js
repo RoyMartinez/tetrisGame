@@ -8,11 +8,14 @@ const BLOCK_SIZE = 20;
 const BOARD_WIDTH = 14;
 const BOARD_HEIGH = 30;
 const TIME_TO_DROP = 500;
+const $score = document.querySelector('span')
+let score = 0
 
 canvas.width = BLOCK_SIZE * BOARD_WIDTH
 canvas.height = BLOCK_SIZE * BOARD_HEIGH
 
 context.scale(BLOCK_SIZE,BLOCK_SIZE)
+
 
 
 const board = [
@@ -75,6 +78,14 @@ const piecesShapes = [
   [
     [1,1,0],
     [0,1,1]
+  ],
+  [
+    [1,0,0],
+    [1,1,1]
+  ],
+  [
+    [0,0,1],
+    [1,1,1]
   ],
 ]
 
@@ -166,10 +177,12 @@ function removeRows(){
   })
 
   rowsToRemove.forEach(y=>{
+    score +=10
     board.splice(y,1)
     const newRow = Array(BOARD_WIDTH).fill(0)
     board.unshift(newRow)
   })
+  $score.innerText = score
 }
 
 document.addEventListener('keydown',event=>{
@@ -189,6 +202,21 @@ document.addEventListener('keydown',event=>{
       piece.position.y--
       solidifyPiece()
       removeRows()
+    }
+  }
+  if(event.key === 'ArrowUp'){
+    const rotatedShape = []
+    for(let i = 0; i < piece.shape[0].length;i++){
+      const row =[]
+      for(let j = piece.shape.length-1;j>=0;j--){
+        row.push(piece.shape[j][i])
+      }
+      rotatedShape.push(row)
+    }
+    const originalShape = piece.shape
+    piece.shape = rotatedShape
+    if(checkCollision()){
+      piece.shape = originalShape
     }
   }
 })
