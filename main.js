@@ -1,5 +1,5 @@
 import './style.css'
-import {BLOCK_SIZE,BOARD_HEIGH,BOARD_WIDTH,TIME_TO_DROP,MOVEMENTS,COLOURS} from './const'
+import {BLOCK_SIZE,BOARD_HEIGHT,BOARD_WIDTH,TIME_TO_DROP,MOVEMENTS,COLOURS} from './const'
 
 
 const canvas = document.querySelector('canvas')
@@ -10,10 +10,10 @@ let score = 0
 let lastTime = 0
 let dropCounter = 0
 canvas.width = BLOCK_SIZE * BOARD_WIDTH
-canvas.height = BLOCK_SIZE * BOARD_HEIGH
+canvas.height = BLOCK_SIZE * BOARD_HEIGHT
 context.scale(BLOCK_SIZE,BLOCK_SIZE)
 
-const board = createBoard(BOARD_WIDTH,BOARD_HEIGH)
+const board = createBoard(BOARD_WIDTH,BOARD_HEIGHT)
 const piecesShapes = [
   [
     [1,1],
